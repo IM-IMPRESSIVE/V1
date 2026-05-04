@@ -1,0 +1,337 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be Mine? 💖</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { -webkit-tap-highlight-color: transparent; }
+  body { font-family: 'Poppins', sans-serif; overscroll-behavior: none; }
+  .font-pacifico { font-family: 'Pacifico', cursive; }
+  .glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .bg-mesh {
+    background-color:#0f051d;
+    background-image: 
+      radial-gradient(at 20% 20%, hsla(323, 91%, 55%, 0.4) 0px, transparent 50%),
+      radial-gradient(at 80% 20%, hsla(271, 91%, 65%, 0.35) 0px, transparent 50%),
+      radial-gradient(at 20% 80%, hsla(239, 91%, 65%, 0.3) 0px, transparent 50%),
+      radial-gradient(at 80% 80%, hsla(343, 91%, 60%, 0.4) 0px, transparent 50%);
+  }
+  .heart-float {
+    position: fixed;
+    bottom: -30px;
+    user-select: none;
+    pointer-events: none;
+    animation: rise linear forwards;
+    z-index: 1;
+  }
+  @keyframes rise {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-120vh) translateX(100px) rotate(720deg); opacity: 0; }
+  }
+  .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+  @keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+  }
+  .btn {
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+</style>
+</head>
+<body class="bg-mesh min-h-screen flex items-center justify-center p-4 text-white relative overflow-hidden">
+  
+  <!-- floating hearts container -->
+  <div id="hearts"></div>
+
+  <!-- Main Proposal Card -->
+  <main id="mainCard" class="w-full max-w-xl relative z-10">
+    <div class="glass rounded-[2.5rem] p-8 md:p-12 text-center">
+      
+      <!-- Lottie Boy Proposing -->
+      <div class="w-40 h-40 md:w-48 md:h-48 mx-auto -mt-4 mb-2">
+        <lottie-player 
+          src="https://assets9.lottiefiles.com/packages/lf20_mwawjro9.json" 
+          background="transparent" 
+          speed="0.9" 
+          loop 
+          autoplay>
+        </lottie-player>
+      </div>
+
+      <h1 class="font-pacifico text-3xl md:text-4xl text-pink-200 mb-2">Hey Ambrita,</h1>
+      <h2 class="text-3xl md:text-[2.6rem] font-bold leading-tight mb-4">
+        Will you be <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-400">mine forever?</span>
+      </h2>
+      
+      <p id="message" class="text-white/70 text-base md:text-lg min-h-[3rem] mb-8 transition-all duration-300">
+        I've been wanting to ask you this for so long... 🥺<br>Please don't break my heart!
+      </p>
+
+      <!-- Buttons -->
+      <div id="btnWrap" class="relative w-full h-[140px] md:h-[120px] mx-auto max-w-md">
+        <button id="yesBtn" class="btn absolute left-[20%] top-1/2 -translate-x-1/2 -translate-y-1/2 px-8 md:px-10 py-4 md:py-5 rounded-full font-semibold text-lg md:text-xl bg-gradient-to-r from-pink-500 to-rose-500 shadow-[0_10px_30px_-10px_rgba(236,72,153,0.7)] hover:shadow-[0_15px_40px_-10px_rgba(236,72,153,0.8)] hover:scale-105 active:scale-95">
+          Yes! 💖
+        </button>
+        
+        <button id="noBtn" class="btn absolute left-[80%] top-1/2 -translate-x-1/2 -translate-y-1/2 px-8 md:px-10 py-4 md:py-5 rounded-full font-semibold text-lg md:text-xl bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-md text-white/90 hover:scale-105 active:scale-95">
+          No 😢
+        </button>
+      </div>
+
+      <p class="text-xs text-white/40 mt-6">ps: the "no" button is a little shy...</p>
+    </div>
+  </main>
+
+  <!-- SUCCESS SCREEN -->
+  
+  
+  
+  <div id="success" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-mesh"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-xl"></div>
+    
+    <div class="relative z-10 w-full max-w-xl text-center">
+      <div class="glass rounded-[2.5rem] p-8 md:p-14">
+        <div class="w-48 h-48 md:w-56 md:h-56 mx-auto -mt-2">
+        
+        
+        <h1 class="font-pacifico text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-amber-200 mb-4">
+          She said YES!!!
+        </h1>
+          <lottie-player 
+            
+            background="transparent"
+            speed="1"
+            loop
+            autoplay>
+          </lottie-player>
+        </div>
+
+<div class="fade-in-up delay-1 flex justify-center" style="margin-bottom: 25px;">
+    <div style="position: relative;">
+        <img src="profile.jpg" alt="Profile"
+            style="
+                width: 160px;
+                height: 160px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 4px solid rgba(255,255,255,0.1);
+                box-shadow: 0 0 40px rgba(196, 77, 255, 0.4);
+                display: block;
+            ">
+        <div style="position: absolute; inset: 0; border-radius: 50%; box-shadow: inset 0 0 20px rgba(0,0,0,0.3); pointer-events: none;"></div>
+</div>
+</div>
+</div>
+ 
+        
+        
+        <h1 class="font-pacifico text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-rose-300 to-amber-200 mb-4">
+          I KNEW IT! 🥹💍
+        </h1>
+
+        <p class="text-white/70 mb-8 max-w-md mx-auto">
+          You just made me the happiest person alive. I promise to annoy you forever with love, cuddles, and terrible jokes.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <button onclick="shareLove()" class="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition">
+            Share Screenshot 📸
+          </button>
+          <button onclick="location.reload()" class="px-6 py-3 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 font-semibold hover:scale-105 transition">
+            Ask Again? 🥰
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const message = document.getElementById('message');
+  const btnWrap = document.getElementById('btnWrap');
+  const mainCard = document.getElementById('mainCard');
+  const success = document.getElementById('success');
+
+  let noClicks = 0;
+  const phrases = [
+    "No 😢",
+    "Are you sure? 🥺",
+    "Really sure?? 😳",
+    "Pookie please... 🙏",
+    "mariya please... 🙏",
+    "Think again! 💔",
+    "Last chance! 😭"
+  ];
+  const messages = [
+    "I've been wanting to ask you this for so long... 🥺<br>Please don't break my heart!",
+    "Ouch! That hurt a little 🥺",
+    "Come on, you know you want to 🫣",
+    "My heart can't take this 💔",
+    "Okay now you're just being mean 😤",
+    "Fine... I'll just hack the button 😏"
+  ];
+
+  function moveNo() {
+    noClicks++;
+    
+    // vibrate on mobile
+    if (navigator.vibrate) navigator.vibrate(30);
+    
+    if (noClicks >= 5) {
+      // TRANSFORM NO INTO YES
+      noBtn.textContent = "Yes 🥰";
+      noBtn.className = yesBtn.className + " animate-pulse";
+      noBtn.style.left = "50%";
+      noBtn.style.top = "75%";
+      noBtn.onmouseenter = null;
+      noBtn.ontouchstart = null;
+      noBtn.onclick = sayYes;
+      message.innerHTML = "Haha gotcha! There's only one correct answer 😘<br><span class='text-pink-300'>Click it babe!</span>";
+      yesBtn.style.transform = "translate(-50%, -50%) scale(1.2)";
+      yesBtn.style.left = "50%";
+      yesBtn.style.top = "30%";
+      return;
+    }
+
+    // update text
+    noBtn.textContent = phrases[noClicks] || "No 😢";
+    message.innerHTML = messages[noClicks] || messages[0];
+    
+    // add shake
+    noBtn.classList.add('shake');
+    setTimeout(()=> noBtn.classList.remove('shake'), 400);
+    
+    // move randomly
+    const wrapRect = btnWrap.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+    const padding = 10;
+    
+    const maxX = wrapRect.width - btnRect.width - padding;
+    const maxY = wrapRect.height - btnRect.height - padding;
+    
+    const newX = Math.random() * maxX;
+    const newY = Math.random() * maxY;
+    
+    noBtn.style.left = `${newX + btnRect.width/2}px`;
+    noBtn.style.top = `${newY + btnRect.height/2}px`;
+    noBtn.style.transform = "translate(-50%, -50%)";
+    
+    // make yes bigger each time
+    const scale = 1 + (noClicks * 0.08);
+    yesBtn.style.transform = `translate(-50%, -50%) scale(${Math.min(scale, 1.4)})`;
+  }
+
+  noBtn.addEventListener('mouseenter', moveNo);
+  noBtn.addEventListener('click', (e) => { e.preventDefault(); moveNo(); });
+  noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(); }, {passive:false});
+
+  function sayYes() {
+    mainCard.style.transition = "all 0.6s ease";
+    mainCard.style.transform = "scale(0.9)";
+    mainCard.style.opacity = "0";
+    
+    setTimeout(() => {
+      mainCard.classList.add('hidden');
+      success.classList.remove('hidden');
+      success.classList.add('flex');
+      launchConfetti();
+      startHeartStorm();
+    }, 400);
+  }
+
+  yesBtn.addEventListener('click', sayYes);
+
+  function launchConfetti() {
+    const duration = 4000;
+    const end = Date.now() + duration;
+    
+    const colors = ['#ff69b4', '#ff1493', '#ffc0cb', '#ffffff', '#f472b6'];
+    
+    (function frame() {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.7 },
+        colors: colors,
+        scalar: 1.2
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.7 },
+        colors: colors,
+        scalar: 1.2
+      });
+      
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+    
+    // big burst
+    setTimeout(() => {
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 },
+        colors: colors,
+        scalar: 1.4
+      });
+    }, 300);
+  }
+
+  // floating hearts background
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart-float';
+    heart.innerHTML = ['💖','💗','💓','💞','💕','❤️','🥰'][Math.floor(Math.random()*7)];
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = (Math.random() * 16 + 14) + 'px';
+    heart.style.animationDuration = (Math.random() * 5 + 6) + 's';
+    heart.style.opacity = Math.random() * 0.5 + 0.5;
+    document.getElementById('hearts').appendChild(heart);
+    setTimeout(() => heart.remove(), 11000);
+  }
+  setInterval(createHeart, 400);
+
+  function startHeartStorm() {
+    for(let i=0; i<20; i++) {
+      setTimeout(createHeart, i*100);
+    }
+  }
+
+  function shareLove() {
+    if (navigator.share) {
+      navigator.share({
+        title: 'She said YES! 💖',
+        text: 'I just got proposed to in the cutest way ever!',
+        url: window.location.href
+      });
+    } else {
+      alert('Screenshot this page and send it to him! 🥰💖');
+    }
+  }
+
+  // initial hearts
+  for(let i=0; i<8; i++) setTimeout(createHeart, i*300);
+</script>
+</body>
+</html>
